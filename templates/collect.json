@@ -1,0 +1,29 @@
+{
+  "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+    "include_replaced": false
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["add","_deleted",true],
+        ["merge-union",
+          ["apply-hops", "{{@ datatype @}}", {
+            "datasets": ["global-{{@ datatype @}} t"],
+            "where": ["or",["eq", ["tuples", "_S.p:P4649.ps:P4649", "_S.p:P4649.ps:P3865"],["tuples", "t.p:P4649.ps:P4649", "t.p:P4649.ps:P3865"]],["eq","_S.$ids","$ids"]]
+          }]
+        ]
+      ],
+      "{{@ datatype @}}": [
+        ["copy", "p:*"],
+        ["copy", "$ids"],
+        ["add","_deleted",false]
+      ]
+    }
+  },
+  "exclude_completeness": ["global-{{@ datatype @}}"]
+}
