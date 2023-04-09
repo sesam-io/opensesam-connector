@@ -3,27 +3,31 @@
   "type": "pipe",
   "source": {
     "type": "dataset",
-    "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
-    "include_replaced": false
+    "dataset": "xxxxxxxx-global-classification"
   },
   "transform": {
     "type": "dtl",
     "rules": {
       "default": [
-        ["add","_deleted",true],
-        ["merge-union",
-          ["apply-hops", "{{@ datatype @}}", {
-            "datasets": ["global-{{@ datatype @}} t"],
-            "where": ["or",["eq", ["tuples", "_S.p:P4649.ps:P4649", "_S.p:P4649.ps:P3865"],["tuples", "t.p:P4649.ps:P4649", "t.p:P4649.ps:P3865"]],["eq","_S.$ids","$ids"]]
-          }]
-        ]
-      ],
-      "{{@ datatype @}}": [
+        ["create",
+          ["apply-hops", "classification", {
+            "datasets": ["global-classification t"],
+            "where": ["or",
+              ["eq",
+                ["tuples", "_S.p:P4649.ps:P4649", "_S.p:P4649.ps:P3865"],
+                ["tuples", "t.p:P4649.ps:P4649", "t.p:P4649.ps:3865"]],
+              ["eq", "_S.$ids", "$ids"]]
+          }]],
+        ["discard"]],
+      "classification": [
         ["copy", "p:*"],
-        ["copy", "$ids"],
-        ["add","_deleted",false]
-      ]
+        ["copy", "_id"],
+        ["copy", "$ids"]]
     }
   },
-  "exclude_completeness": ["global-{{@ datatype @}}"]
+  "exclude_completeness": ["xxxxxxxx-global-classification", "global-classification"],
+  "namespaces": {
+    "identity": "global-classification-enhance",
+    "property": "global-classification-enhance"
+  }
 }
