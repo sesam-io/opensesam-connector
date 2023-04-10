@@ -1,0 +1,6 @@
+{
+  "_id": "{{@ system @}}",
+  "type": "system:url",
+  "url_pattern": "https://dummy.sesam.io/%s",
+  "verify_ssl": true
+}
