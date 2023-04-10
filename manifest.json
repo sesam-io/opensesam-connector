@@ -15,5 +15,5 @@
     }
   },
   "requires_service_api_access": false,
-  "system": "templates/system.json"
+  "system-template": "templates/system.json"
 }
