@@ -1,3 +1,19 @@
 {
-  "auth": "open"
+  "auth": "open",
+  "datatypes": {
+    "location": {
+      "label": "Location",
+      "template": "templates/collect.json"
+    },
+    "classification": {
+      "label": "Classification",
+      "template": "templates/collect.json"
+    },
+    "organisation": {
+      "label": "Organisation",
+      "template": "templates/collect.json"
+    }
+  },
+  "requires_service_api_access": false,
+  "system-template": "templates/system.json"
 }
